@@ -25,6 +25,17 @@ This is a real screenshot of the macOS desktop `.app`. The workbench includes a 
   <img src="docs/desktop/screenshots/workbench-main.png" alt="Claude Code LaoHuang desktop workbench" width="900">
 </p>
 
+## Download Desktop App
+
+- [Windows x64 `.exe` installer](https://github.com/Ai-LaoHuang/claude-code-laohuang/releases/download/v0.1.0/Claude-Code-LaoHuang_0.1.0_windows_x64_setup.exe)
+- [v0.1.0 release page](https://github.com/Ai-LaoHuang/claude-code-laohuang/releases/tag/v0.1.0)
+
+Windows installer SHA256:
+
+```text
+eec6531c177106bdc1943d56b5cac08effa62bc4792407c808e646ed09419b9e
+```
+
 ## Desktop Highlights
 
 - Native desktop workbench: manage projects and session history from the sidebar while keeping the main conversation and tool results in one place.
