@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from '../../i18n'
 import { useChatStore } from '../../stores/chatStore'
 import { SETTINGS_TAB_ID, useTabStore } from '../../stores/tabStore'
@@ -91,9 +92,11 @@ export function ChatInput({ variant = 'default', compact = false }: ChatInputPro
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const plusButtonRef = useRef<HTMLButtonElement>(null)
   const plusMenuRef = useRef<HTMLDivElement>(null)
   const slashMenuRef = useRef<HTMLDivElement>(null)
   const fileSearchRef = useRef<FileSearchMenuHandle>(null)
+  const [plusMenuPosition, setPlusMenuPosition] = useState<{ left: number; top?: number; bottom?: number } | null>(null)
   const slashItemRefs = useRef<(HTMLButtonElement | null)[]>([])
   const composerDraftsRef = useRef<Record<string, ComposerDraft>>({})
   const previousActiveTabIdRef = useRef<string | null>(null)
@@ -284,13 +287,43 @@ export function ChatInput({ variant = 'default', compact = false }: ChatInputPro
   useEffect(() => {
     if (!plusMenuOpen) return
     const handleClick = (event: MouseEvent) => {
-      if (plusMenuRef.current && !plusMenuRef.current.contains(event.target as Node)) {
+      const target = event.target as Node
+      if (
+        plusMenuRef.current &&
+        !plusMenuRef.current.contains(target) &&
+        !plusButtonRef.current?.contains(target)
+      ) {
         setPlusMenuOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [plusMenuOpen])
+
+  useEffect(() => {
+    if (!plusMenuOpen || isMobileComposer) return
+    const updatePosition = () => {
+      const rect = plusButtonRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const margin = 8
+      const menuWidth = 240
+      const estimatedMenuHeight = 104
+      const openUp = rect.top >= estimatedMenuHeight + margin + 12
+      setPlusMenuPosition({
+        left: Math.min(Math.max(12, rect.left), Math.max(12, window.innerWidth - menuWidth - 12)),
+        ...(openUp
+          ? { bottom: Math.max(12, window.innerHeight - rect.top + margin) }
+          : { top: Math.min(window.innerHeight - estimatedMenuHeight - 12, rect.bottom + margin) }),
+      })
+    }
+    updatePosition()
+    window.addEventListener('resize', updatePosition)
+    window.addEventListener('scroll', updatePosition, true)
+    return () => {
+      window.removeEventListener('resize', updatePosition)
+      window.removeEventListener('scroll', updatePosition, true)
+    }
+  }, [plusMenuOpen, isMobileComposer])
 
   useEffect(() => {
     if (!slashMenuOpen) return
@@ -986,6 +1019,8 @@ export function ChatInput({ variant = 'default', compact = false }: ChatInputPro
                 <>
                   <div ref={plusMenuRef} className="relative">
                     <button
+                      ref={plusButtonRef}
+                      type="button"
                       onClick={() => setPlusMenuOpen((value) => !value)}
                       aria-label="Open composer tools"
                       className={useCodexComposer
@@ -996,8 +1031,10 @@ export function ChatInput({ variant = 'default', compact = false }: ChatInputPro
                     </button>
 
                     {plusMenuOpen && (
-                      <div className={`absolute bottom-full left-0 z-50 mb-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-container-lowest)] py-1 shadow-[var(--shadow-dropdown)] ${isMobileComposer ? 'w-[min(240px,calc(100vw-32px))]' : 'w-[240px]'}`}>
+                      isMobileComposer ? (
+                      <div className="absolute bottom-full left-0 z-50 mb-2 w-[min(240px,calc(100vw-32px))] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-container-lowest)] py-1 shadow-[var(--shadow-dropdown)]">
                         <button
+                          type="button"
                           onClick={openAttachmentPicker}
                           className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-[var(--color-surface-hover)]"
                         >
@@ -1005,6 +1042,7 @@ export function ChatInput({ variant = 'default', compact = false }: ChatInputPro
                           <span className="text-sm text-[var(--color-text-primary)]">{addFilesLabel}</span>
                         </button>
                         <button
+                          type="button"
                           onClick={insertSlashCommand}
                           className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-[var(--color-surface-hover)]"
                         >
@@ -1012,6 +1050,31 @@ export function ChatInput({ variant = 'default', compact = false }: ChatInputPro
                           <span className="text-sm text-[var(--color-text-primary)]">{slashCommandsLabel}</span>
                         </button>
                       </div>
+                      ) : createPortal(
+                      <div
+                        ref={plusMenuRef}
+                        style={plusMenuPosition ?? undefined}
+                        className="fixed z-[10000] w-[240px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-container-lowest)] py-1 shadow-[var(--shadow-dropdown)]"
+                      >
+                        <button
+                          type="button"
+                          onClick={openAttachmentPicker}
+                          className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-[var(--color-surface-hover)]"
+                        >
+                          <span className="material-symbols-outlined text-[18px] text-[var(--color-text-secondary)]">attach_file</span>
+                          <span className="text-sm text-[var(--color-text-primary)]">{addFilesLabel}</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={insertSlashCommand}
+                          className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-[var(--color-surface-hover)]"
+                        >
+                          <span className="w-[24px] text-center text-[18px] font-bold text-[var(--color-text-secondary)]">/</span>
+                          <span className="text-sm text-[var(--color-text-primary)]">{slashCommandsLabel}</span>
+                        </button>
+                      </div>,
+                      document.body,
+                      )
                     )}
                   </div>
 
