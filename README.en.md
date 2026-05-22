@@ -27,8 +27,17 @@ This is a real screenshot of the macOS desktop `.app`. The workbench includes a 
 
 ## Download Desktop App
 
+- [macOS Apple Silicon `.dmg`](https://github.com/Ai-LaoHuang/claude-code-laohuang/releases/download/v0.1.0/Claude-Code-LaoHuang_0.1.0_macos_arm64.dmg)
 - [Windows x64 `.exe` installer](https://github.com/Ai-LaoHuang/claude-code-laohuang/releases/download/v0.1.0/Claude-Code-LaoHuang_0.1.0_windows_x64_setup.exe)
 - [v0.1.0 release page](https://github.com/Ai-LaoHuang/claude-code-laohuang/releases/tag/v0.1.0)
+
+The macOS package is a local Apple Silicon build and is not notarized yet. macOS may show a Gatekeeper warning the first time it is opened.
+
+macOS DMG SHA256:
+
+```text
+f1de4b9b1c8162898a4f26b4f922079242f42a1a99d10b9bf9764e821806f171
+```
 
 Windows installer SHA256:
 
