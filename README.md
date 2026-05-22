@@ -2,21 +2,60 @@
 
 <p align="right"><strong>中文</strong> | <a href="./README.en.md">English</a></p>
 
-基于 Claude-code-laohuang 源码修复的**本地可运行版本**，支持接入任意 Anthropic 兼容 API（如 MiniMax、OpenRouter 等）。
+<p align="center">
+  <img src="desktop/public/app-icon.png" alt="Claude Code LaoHuang" width="96" height="96">
+</p>
+
+<p align="center">
+  <strong>Claude Code LaoHuang</strong><br>
+  本地可运行的 Claude Code 桌面工作台与 CLI/TUI 版本。
+</p>
+
+基于 Claude-code-laohuang 源码修复的**本地可运行版本**，支持接入任意 Anthropic 兼容 API（如 MiniMax、DeepSeek、OpenRouter 等）。
 
 > 原始泄露源码无法直接运行。本仓库修复了启动链路中的多个阻塞问题，使完整的 Ink TUI 交互界面可以在本地工作。
 
+---
+
+## 桌面版预览
+
+下面是 macOS 桌面版 `.app` 的真实工作台截图。界面包含项目侧边栏、会话列表、对话区、工具调用记录、权限模式、模型选择、上下文用量和底部输入区。
+
 <p align="center">
-  <img src="docs/00runtime.png" alt="运行截图" width="800">
+  <img src="docs/desktop/screenshots/workbench-main.png" alt="Claude Code LaoHuang 桌面工作台" width="900">
 </p>
 
-## 功能
+## 桌面版亮点
 
-- 完整的 Ink TUI 交互界面（与 Claude-code-laohuang 界面风格一致）
-- `--print` 无头模式（脚本/CI 场景）
-- 支持 MCP 服务器、插件、Skills
-- 支持自定义 API 端点和模型
-- 降级 Recovery CLI 模式
+- 原生桌面工作台：侧边栏管理项目和历史会话，主区域承载长对话与工具调用结果。
+- 本地项目工作流：可打开项目、打开终端、显示工作区，并围绕当前目录继续编码任务。
+- 多 Provider / 模型接入：支持 Anthropic 兼容 API，可配置 MiniMax、DeepSeek、OpenRouter 等模型。
+- 权限模式控制：底部输入区可切换访问权限，适合在自动编辑、审查和完全访问之间切换。
+- 上下文用量可视化：输入区显示上下文占用，方便观察长对话压力。
+- 桌面安装包方案：macOS 已有 `.app` / `.dmg` 构建，Windows 桌面版通过 GitHub Actions 在 Windows runner 上打包 NSIS 安装器。
+- CLI/TUI 保留：仍可使用完整 Ink TUI、`--print` 无头模式、MCP、插件和 Skills。
+
+## 安装包
+
+当前仓库提供两类构建方式：
+
+| 平台 | 状态 | 说明 |
+|------|------|------|
+| macOS Apple Silicon | 已验证 | 本地构建产物为 `.app` 和 `.dmg` |
+| Windows x64 | 已配置自动构建 | 使用 GitHub Actions 的 `Build Windows Desktop Installer` workflow 生成桌面版 NSIS `.exe` 安装包 |
+| CLI/TUI | 可本地运行 | 适合脚本、终端和服务器环境 |
+
+Windows 桌面安装器会在安装期处理 WebView2，并检查 Git for Windows；如果依赖安装失败，会给出中文失败原因和手动安装提示。
+
+详细说明见：[Windows 桌面版安装器说明](docs/desktop/windows-desktop-installer.md) 与 [桌面端使用橙皮书](docs/desktop/orange-book.md)。
+
+---
+
+## CLI/TUI 运行截图
+
+<p align="center">
+  <img src="docs/00runtime.png" alt="CLI/TUI 运行截图" width="800">
+</p>
 
 ---
 
