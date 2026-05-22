@@ -40,7 +40,9 @@ export function PermissionModeSelector({ workDir: workDirProp, compact = false, 
   const [open, setOpen] = useState(false)
   const [confirmDialog, setConfirmDialog] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  const [menuPosition, setMenuPosition] = useState<{ left: number; top?: number; bottom?: number } | null>(null)
 
   const isControlled = value !== undefined
   const currentMode = isControlled ? value : storeMode
@@ -89,10 +91,10 @@ export function PermissionModeSelector({ workDir: workDirProp, compact = false, 
   }
   const isCodexComposer = variant === 'codexComposer'
   const CODEX_MODE_LABELS: Record<PermissionMode, string> = {
-    default: '默认权限',
-    acceptEdits: '自动审查',
+    default: '榛樿鏉冮檺',
+    acceptEdits: '鑷姩瀹℃煡',
     plan: t('permMode.label.plan'),
-    bypassPermissions: '完全访问权限',
+    bypassPermissions: '瀹屽叏璁块棶鏉冮檺',
     dontAsk: t('permMode.label.dontAsk'),
   }
   const displayLabels = isCodexComposer ? CODEX_MODE_LABELS : MODE_LABELS
@@ -128,6 +130,31 @@ export function PermissionModeSelector({ workDir: workDirProp, compact = false, 
       document.removeEventListener('keydown', handleEsc)
     }
   }, [open])
+
+  useEffect(() => {
+    if (!open || isMobile) return
+    const updatePosition = () => {
+      const rect = buttonRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const margin = 8
+      const menuWidth = isCodexComposer ? 260 : 320
+      const estimatedMenuHeight = isCodexComposer ? 164 : 260
+      const openUp = rect.top >= estimatedMenuHeight + margin + 12
+      setMenuPosition({
+        left: Math.min(Math.max(12, rect.left), Math.max(12, window.innerWidth - menuWidth - 12)),
+        ...(openUp
+          ? { bottom: Math.max(12, window.innerHeight - rect.top + margin) }
+          : { top: Math.min(window.innerHeight - estimatedMenuHeight - 12, rect.bottom + margin) }),
+      })
+    }
+    updatePosition()
+    window.addEventListener('resize', updatePosition)
+    window.addEventListener('scroll', updatePosition, true)
+    return () => {
+      window.removeEventListener('resize', updatePosition)
+      window.removeEventListener('scroll', updatePosition, true)
+    }
+  }, [open, isMobile])
 
   const permissionOptions = (
     <div id={menuId} ref={menuRef} role="menu">
@@ -193,6 +220,8 @@ export function PermissionModeSelector({ workDir: workDirProp, compact = false, 
   return (
     <div ref={ref} className="relative">
       <button
+        ref={buttonRef}
+        type="button"
         onClick={() => setOpen(!open)}
         aria-label={displayLabels[currentMode]}
         aria-haspopup="menu"
@@ -226,10 +255,17 @@ export function PermissionModeSelector({ workDir: workDirProp, compact = false, 
           >
             {permissionOptions}
           </MobileBottomSheet>
-        ) : (
-          <div id={menuId} ref={menuRef} role="menu" className={isCodexComposer ? 'opaque-popover codex-composer-permission-menu absolute left-0 bottom-full z-50 mb-2' : 'opaque-popover absolute left-0 bottom-full z-50 mb-2 w-[320px] rounded-xl border border-[var(--color-border)] py-2 shadow-[var(--shadow-dropdown)]'}>
+        ) : createPortal(
+          <div
+            id={menuId}
+            ref={menuRef}
+            role="menu"
+            style={menuPosition ?? undefined}
+            className={isCodexComposer ? 'opaque-popover codex-composer-permission-menu fixed z-[10000]' : 'opaque-popover fixed z-[10000] w-[320px] rounded-xl border border-[var(--color-border)] py-2 shadow-[var(--shadow-dropdown)]'}
+          >
             {menuContent}
-          </div>
+          </div>,
+          document.body,
         )
       )}
 
