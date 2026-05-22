@@ -115,12 +115,6 @@ CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 
 #### macOS / Linux
 
-On macOS, you can also double-click the one-click installer:
-
-```bash
-Claude-code-laohuang-Mac-一键安装.command
-```
-
 ```bash
 # Interactive TUI mode (full interface)
 ./bin/claude-code-laohuang

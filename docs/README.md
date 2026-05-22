@@ -26,6 +26,7 @@ runtime verification flow.
 - [Computer Use](./desktop/computer-use.md)
 - [Workspace and worktrees](./desktop/workspace-and-worktrees.md)
 - [Windows 桌面版安装器](./desktop/windows-desktop-installer.md)
+- [Project audit archive](./project-audit/README.md)
 
 ## Current Verified Commands
 

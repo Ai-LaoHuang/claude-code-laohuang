@@ -1,11 +1,13 @@
-# Claude-code-laohuang Mac 一键安装
+# Claude-code-laohuang Mac 一键安装（Legacy）
+
+这是一份早期 CLI/TUI 版一键安装脚本说明。当前 README 首页不再推荐这条路径；桌面版发布与安装包说明以 `docs/desktop/` 下的文档为准。
 
 ## 用法
 
 1. 解压项目
 2. 双击：
 
-`Claude-code-laohuang-Mac-一键安装.command`
+`scripts/legacy/Claude-code-laohuang-Mac-一键安装.command`
 
 ## 安装器会做什么
 

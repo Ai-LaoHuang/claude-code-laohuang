@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT_DIR"
 
-echo "== Claude-code-laohuang Mac installer =="
+echo "== Claude-code-laohuang legacy Mac installer =="
 echo
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
