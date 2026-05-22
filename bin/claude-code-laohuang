@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
+# Prefer the system ripgrep when available. The recovered vendor rg binaries can
+# be quarantined or unsigned on macOS, which makes Glob/Grep tool calls hang.
+export USE_BUILTIN_RIPGREP="${USE_BUILTIN_RIPGREP:-0}"
+
+# Force recovery CLI (simple readline REPL, no Ink TUI)
+if [[ "${CLAUDE_CODE_FORCE_RECOVERY_CLI:-0}" == "1" ]]; then
+  CLAUDE_CODE_LOCAL_ENABLE_ULTRAREVIEW=1 CLAUDE_CODE_LOCAL_ENABLE_BRIDGE=1 CLAUDE_CODE_LOCAL_ENABLE_BRIEF=1 exec bun run --feature BUDDY --feature PROACTIVE --feature KAIROS_BRIEF --feature KAIROS_DREAM --feature ULTRAPLAN --feature BRIDGE_MODE --env-file=.env ./src/localRecoveryCli.ts "$@"
+fi
+
+# Default: full CLI with Ink TUI
+CLAUDE_CODE_LOCAL_ENABLE_ULTRAREVIEW=1 CLAUDE_CODE_LOCAL_ENABLE_BRIDGE=1 CLAUDE_CODE_LOCAL_ENABLE_BRIEF=1 exec bun run --feature BUDDY --feature PROACTIVE --feature KAIROS_BRIEF --feature KAIROS_DREAM --feature ULTRAPLAN --feature BRIDGE_MODE --env-file=.env ./src/entrypoints/cli.tsx "$@"

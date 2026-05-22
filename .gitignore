@@ -1,0 +1,32 @@
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# System files
+.DS_Store
+
+# Local agent/runtime state
+.claude/
+.claude-flow/
+.codex/
+.desktop-gpt55-claude/
+.desktop-gpt55-min-claude/
+
+# Build outputs and installers
+dist/
+build-windows/
+desktop/dist/
+desktop/build-artifacts/
+desktop/src-tauri/binaries/
+desktop/src-tauri/target/
+desktop/src-tauri/gen/
+desktop/src-tauri/Cargo.lock.backup
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp

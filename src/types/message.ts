@@ -1,0 +1,41 @@
+export type Message = any
+export type RenderableMessage = Message
+export type NormalizedMessage = Message
+export type UserMessage = Message
+export type NormalizedUserMessage = Message
+export type AssistantMessage = Message
+export type NormalizedAssistantMessage<T = any> = Message
+export type SystemMessage = Message
+export type SystemInformationalMessage = Message
+export type SystemAPIErrorMessage = Message
+export type SystemTextMessage = Message
+export type SystemStopHookSummaryMessage = Message
+export type SystemBridgeStatusMessage = Message
+export type SystemTurnDurationMessage = Message
+export type SystemThinkingMessage = Message
+export type SystemMemorySavedMessage = Message
+export type AttachmentMessage<T = any> = Message
+export type ProgressMessage<T = unknown> = Message & { data: T }
+export type HookResultMessage = Message
+export type PartialCompactDirection = Message
+export type GroupedToolUseMessage = Message
+export type CollapsedReadSearchGroup = Message
+export type SystemMessageType = Message
+export type RequestStartEvent = Message
+export type StreamEvent = Message
+export type ToolUseSummaryMessage = Message
+export type TombstoneMessage = Message
+export type StopHookInfo = Message
+export type SystemCompactBoundaryMessage = Message
+export type MessageOrigin = any
+export type SystemLocalCommandMessage = Message
+export type CollapsibleMessage = Message
+export type SystemAgentsKilledMessage = Message
+export type SystemApiMetricsMessage = Message
+export type SystemAwaySummaryMessage = Message
+export type SystemMessageLevel = any
+export type SystemMicrocompactBoundaryMessage = Message
+export type SystemPermissionRetryMessage = Message
+export type SystemScheduledTaskFireMessage = Message
+export type CompactMetadata = any
+export type SystemFileSnapshotMessage = Message

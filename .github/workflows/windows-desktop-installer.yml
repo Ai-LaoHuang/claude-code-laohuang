@@ -1,0 +1,41 @@
+name: Build Windows Desktop Installer
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'windows-v*'
+
+jobs:
+  build-windows-desktop:
+    name: Windows desktop installer
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - name: Install NSIS
+        shell: powershell
+        run: choco install nsis -y --no-progress
+
+      - name: Build Windows desktop installer
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File ./desktop/scripts/build-windows-x64.ps1
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Claude-Code-LaoHuang-windows-x64-installer
+          path: desktop/build-artifacts/windows-x64/*
+          if-no-files-found: error

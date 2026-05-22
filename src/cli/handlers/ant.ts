@@ -1,0 +1,14 @@
+export async function logHandler(..._args: any[]): Promise<void> {}
+export async function errorHandler(..._args: any[]): Promise<void> {}
+export async function exportHandler(..._args: any[]): Promise<void> {}
+export async function taskCreateHandler(..._args: any[]): Promise<void> {}
+export async function taskListHandler(..._args: any[]): Promise<void> {}
+export async function taskGetHandler(..._args: any[]): Promise<void> {}
+export async function taskUpdateHandler(..._args: any[]): Promise<void> {}
+export async function taskDeleteHandler(..._args: any[]): Promise<void> {}
+export async function taskCompleteHandler(..._args: any[]): Promise<void> {}
+export async function taskShowHandler(..._args: any[]): Promise<void> {}
+export async function taskDirHandler(..._args: any[]): Promise<void> {}
+export async function completionHandler(..._args: any[]): Promise<void> {}
+export async function remoteTriggerHandler(..._args: any[]): Promise<void> {}
+export async function remoteTriggerRunHandler(..._args: any[]): Promise<void> {}

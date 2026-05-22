@@ -1,0 +1,14 @@
+export type SDKControlRequest = any
+export type SDKControlRequestInner = any
+export type SDKControlResponse = any
+export type SDKControlCancelRequest = any
+export type SDKControlPermissionRequest = any
+export type ControlRequest = SDKControlRequest
+export type ControlResponse = SDKControlResponse
+export type StdinMessage = any
+export type StdoutMessage = any
+export type SDKPartialAssistantMessage = any
+export type SDKControlInitializeRequest = any
+export type SDKControlInitializeResponse = any
+export type SDKControlMcpSetServersResponse = any
+export type SDKControlReloadPluginsResponse = any

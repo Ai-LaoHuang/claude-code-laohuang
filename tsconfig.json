@@ -1,0 +1,96 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@ant/claude-for-chrome-mcp": [
+        "./stubs/ant-claude-for-chrome-mcp.ts"
+      ],
+      "color-diff-napi": [
+        "./stubs/color-diff-napi.ts"
+      ],
+      "@anthropic-ai/claude-agent-sdk": [
+        "./stubs/claude-agent-sdk.ts"
+      ],
+      "@anthropic-ai/bedrock-sdk": [
+        "./stubs/anthropic-provider-sdks.ts"
+      ],
+      "@anthropic-ai/foundry-sdk": [
+        "./stubs/anthropic-provider-sdks.ts"
+      ],
+      "@anthropic-ai/vertex-sdk": [
+        "./stubs/anthropic-provider-sdks.ts"
+      ],
+      "@azure/identity": [
+        "./stubs/azure-identity.ts"
+      ],
+      "vscode-languageserver-protocol": [
+        "./stubs/any-module.ts"
+      ],
+      "plist": [
+        "./stubs/any-module.ts"
+      ],
+      "@aws-sdk/client-sts": [
+        "./stubs/any-module.ts"
+      ],
+      "@aws-sdk/credential-providers": [
+        "./stubs/any-module.ts"
+      ],
+      "cacache": [
+        "./stubs/any-module.ts"
+      ],
+      "cli-highlight": [
+        "./stubs/any-module.ts"
+      ],
+      "turndown": [
+        "./stubs/any-module.ts"
+      ],
+      "sharp": [
+        "./stubs/any-module.ts"
+      ],
+      "image-processor-napi": [
+        "./stubs/any-module.ts"
+      ],
+      "@ant/computer-use-mcp": [
+        "./stubs/any-module.ts"
+      ],
+      "@ant/computer-use-input": [
+        "./stubs/any-module.ts"
+      ],
+      "@ant/computer-use-swift": [
+        "./stubs/any-module.ts"
+      ],
+      "@ant/computer-use-mcp/sentinelApps": [
+        "./stubs/ant-computer-use-mcp-sentinelApps.ts"
+      ],
+      "@ant/computer-use-mcp/types": [
+        "./stubs/ant-computer-use-mcp-types.ts"
+      ],
+      "src/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "bun-types",
+      "./stubs/recovered-modules"
+    ]
+  },
+  "exclude": [
+    "adapters",
+    "build-windows",
+    "desktop",
+    "dist",
+    "runtime",
+    "src/desktop-server",
+    "src/services/openaiAuth",
+    "src/utils/computerUse",
+    "src/vendor/computer-use-mcp"
+  ]
+}

@@ -1,0 +1,27 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="laohuang-orange" x1="254" y1="210" x2="776" y2="814" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF9438"/>
+      <stop offset="1" stop-color="#FF4F1F"/>
+    </linearGradient>
+    <filter id="card-shadow" x="42" y="34" width="940" height="956" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#0F172A" flood-opacity="0.12"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#0F172A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <g filter="url(#card-shadow)">
+    <rect x="82" y="66" width="860" height="860" rx="150" fill="white"/>
+    <rect x="83.5" y="67.5" width="857" height="857" rx="148.5" stroke="#E5E7EB" stroke-width="3"/>
+  </g>
+  <g transform="translate(512 525) scale(0.78)">
+    <path d="M0 -84 C-37 -157 -76 -300 -39 -379 C-14 -431 58 -436 96 -391 C145 -333 102 -230 37 -142 L0 -84Z" fill="url(#laohuang-orange)" transform="rotate(0)"/>
+    <path d="M0 -84 C-37 -157 -76 -300 -39 -379 C-14 -431 58 -436 96 -391 C145 -333 102 -230 37 -142 L0 -84Z" fill="url(#laohuang-orange)" transform="rotate(45)"/>
+    <path d="M0 -84 C-37 -157 -76 -300 -39 -379 C-14 -431 58 -436 96 -391 C145 -333 102 -230 37 -142 L0 -84Z" fill="url(#laohuang-orange)" transform="rotate(90)"/>
+    <path d="M0 -84 C-37 -157 -76 -300 -39 -379 C-14 -431 58 -436 96 -391 C145 -333 102 -230 37 -142 L0 -84Z" fill="url(#laohuang-orange)" transform="rotate(135)"/>
+    <path d="M0 -84 C-37 -157 -76 -300 -39 -379 C-14 -431 58 -436 96 -391 C145 -333 102 -230 37 -142 L0 -84Z" fill="url(#laohuang-orange)" transform="rotate(180)"/>
+    <path d="M0 -84 C-37 -157 -76 -300 -39 -379 C-14 -431 58 -436 96 -391 C145 -333 102 -230 37 -142 L0 -84Z" fill="url(#laohuang-orange)" transform="rotate(225)"/>
+    <path d="M0 -84 C-37 -157 -76 -300 -39 -379 C-14 -431 58 -436 96 -391 C145 -333 102 -230 37 -142 L0 -84Z" fill="url(#laohuang-orange)" transform="rotate(270)"/>
+    <path d="M0 -84 C-37 -157 -76 -300 -39 -379 C-14 -431 58 -436 96 -391 C145 -333 102 -230 37 -142 L0 -84Z" fill="url(#laohuang-orange)" transform="rotate(315)"/>
+  </g>
+  <path d="M760 258 C770 311 799 340 852 352 C799 364 770 393 760 446 C750 393 721 364 668 352 C721 340 750 311 760 258Z" fill="url(#laohuang-orange)"/>
+</svg>

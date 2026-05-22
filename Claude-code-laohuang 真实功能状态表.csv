@@ -1,0 +1,20 @@
+功能,具体作用,当前状态,完成度,怎么打开,怎么实现,结论
+Buddy 宠物,"终端里的陪伴宠物，能孵化、查看信息、改名、互动",已恢复并实测,高,"/buddy; /buddy info; /buddy pet; /buddy rename 名字","补了 src/commands/buddy/buddy.ts、src/buddy/observer.ts，并在 bin/claude-code-laohuang 打开 BUDDY flag",可用
+Proactive 主动模式,"空闲时主动 tick、主动推进任务",已恢复并实测,中高,"/proactive status; /proactive on; /proactive off; /proactive pause; /proactive resume","补了 src/proactive/index.ts、src/proactive/useProactive.ts、src/commands/proactive.ts、src/tools/SleepTool/SleepTool.ts",可用
+Auto Dream 自动做梦,"整理记忆、压缩长期记忆、更新 MEMORY.md",已恢复并实测,中高,"/dream","后台实现原本就在 src/services/autoDream/autoDream.ts，我补了 src/skills/bundled/dream.ts 并打开 KAIROS_DREAM",可用
+/memory 菜单,"编辑和管理记忆文件，切换 auto-memory / auto-dream",原本就有，交互模式可用,中高,"正常 TUI 中输入 /memory","命令在 src/commands/memory/index.ts，UI 在 src/commands/memory/memory.tsx 和 src/components/memory/MemoryFileSelector.tsx",可用但不是 -p 无头模式命令
+/cost,"显示当前会话累计成本、时长和代码改动统计",已实测可用,中,"/cost","命令本体在 src/commands/cost/index.ts 和 src/commands/cost/cost.ts；本地修复版可直接显示 cost-tracker 统计",可用
+/files,"查看当前上下文里已经进入会话的文件",已解锁并实测,中,"/files","解除 src/commands/files/index.ts 的 ant-only gate",可用
+/version,"显示当前运行版本与构建时间",已解锁并实测,中,"/version","解除 src/commands/version.ts 的 ant-only gate，并把 version 加回普通命令列表 src/commands.ts",可用
+/tag,"给当前会话打可搜索标签，便于 /resume 和搜索定位",已解锁，交互模式可用,中,"正常 TUI 中输入 /tag 标签名","解除 src/commands/tag/index.ts 的 ant-only gate；实现本体在 src/commands/tag/tag.tsx",可用但不是 -p 无头模式命令
+/brief,"切换 Brief-only 模式，让系统通过 SendUserMessage 这类更像助手态的输出方式与用户交互",已解锁到本地修复版,中,"正常 TUI 中输入 /brief","我在 bin/claude-code-laohuang 打开 KAIROS_BRIEF，并在 src/commands/brief.ts 与 src/tools/BriefTool/BriefTool.ts 增加 CLAUDE_CODE_LOCAL_ENABLE_BRIEF 本地绕过",可用但不是 -p 无头模式命令
+/init-verifiers,"为当前项目生成 verifier skill，用于后续自动化验证代码改动",已解锁,中,"正常 TUI 中输入 /init-verifiers","命令本体在 src/commands/init-verifiers.ts；我把它从 INTERNAL_ONLY_COMMANDS 移回普通命令列表",可见可试，适合项目初始化
+Kairos 主动助手总系统,"24h 助手、助手态、持续运行和频道/消息系统总框架",有大量代码但没整体点亮,中,当前没有稳定对外入口,"相关代码很多，主要在 src/main.tsx、src/assistant、KAIROS feature 接线；不是补一个文件就全活",部分存在未完成
+Bridge / Remote Control,"本地 CLI 与远端浏览器/会话桥接、远控、同步",入口已显式露出且本地资格 gate 已绕过,中,"正常 TUI 中输入 /remote-control 或 /rc；或命令行运行 claude-code-laohuang remote-control","src/bridge 代码完整；我把 src/commands/bridge/index.ts 改成不再彻底隐藏，在启动脚本打开 BRIDGE_MODE 和 CLAUDE_CODE_LOCAL_ENABLE_BRIDGE，并让 fast-path 支持 CLAUDE_BRIDGE_OAUTH_TOKEN / CLAUDE_BRIDGE_BASE_URL override",可见可试；现在真实前提是要有 bridge token 或 Claude 登录
+/bridge-kick,"向 Bridge 注入故障场景，用来测试断线重连、poll/register/heartbeat 恢复路径",已解锁并可无头回状态,中,"/bridge-kick status; /bridge-kick close 1002","命令本体在 src/commands/bridge-kick.ts；我把它从 INTERNAL_ONLY_COMMANDS 移到正常命令集，解除 ant-only gate，并打开非交互支持",可用但真正注入故障前要先连上 Remote Control
+Ultraplan 超级规划,"远端多代理规划，生成深度计划",入口已显式露出,中低,"正常 TUI 中输入 /ultraplan <任务>","命令在 src/commands/ultraplan.tsx；我把 isEnabled 改为 true，并在启动脚本打开 ULTRAPLAN",可见可试但远端依赖重
+Ultrareview 超级审查,"远端高规格 review / 审查",本地修复版已显式开启 gate,中低,"正常 TUI 中输入 /ultrareview","通过 src/commands/review/ultrareviewEnabled.ts 增加 CLAUDE_CODE_LOCAL_ENABLE_ULTRAREVIEW=1 开关，并在启动脚本注入该环境变量",可见可试但远端依赖重
+Teleport 跨机传送,"把任务/上下文打包发到另一台机器或远端继续跑",本地代码很多但后端依赖重,中低,当前没有给你补成可直接开的稳定入口,"主要在 src/utils/teleport 和 src/utils/teleport.tsx",代码在未完成接通
+UDS Inbox 跨会话通信,"多窗口/多会话之间发消息、列 peers、桥接消息",有接线但关键本地模块缺失,低,不建议现在启用,"代码里大量 feature('UDS_INBOX')，但缺 src/utils/udsMessaging.ts",未完成
+Daemon 后台常驻,"真正的后台服务常驻层",目录缺失,极低,无,"src/daemon 不存在",现在不可行
+REVIEW_ARTIFACT / hunter,"审查产物与 hunter 技能链路",关键工具目录缺失,低,无,"src/skills/bundled/index.ts 有 require('./hunter.js')，但 hunter 文件和 ReviewArtifactTool 目录都缺",现在不可行
