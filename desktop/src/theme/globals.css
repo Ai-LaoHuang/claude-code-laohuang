@@ -2,9 +2,9 @@
 @import "@xterm/xterm/css/xterm.css";
 @plugin "@tailwindcss/typography";
 
-/* ─── Self-hosted fonts (no Google CDN dependency) ────────────── */
+/* 鈹€鈹€鈹€ Self-hosted fonts (no Google CDN dependency) 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 
-/* Inter – variable weight 400-600, latin */
+/* Inter 鈥?variable weight 400-600, latin */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -22,7 +22,7 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* Manrope – variable weight 400-800, latin */
+/* Manrope 鈥?variable weight 400-800, latin */
 @font-face {
   font-family: 'Manrope';
   font-style: normal;
@@ -40,7 +40,7 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* JetBrains Mono – weight 400, latin */
+/* JetBrains Mono 鈥?weight 400, latin */
 @font-face {
   font-family: 'JetBrains Mono';
   font-style: normal;
@@ -58,7 +58,7 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* Material Symbols Outlined – variable weight, use block to avoid showing raw text */
+/* Material Symbols Outlined 鈥?variable weight, use block to avoid showing raw text */
 @font-face {
   font-family: 'Material Symbols Outlined';
   font-style: normal;
@@ -69,7 +69,7 @@
 
 /* Code highlighting is handled by shiki/react-shiki (inline styles + CSS line numbers) */
 
-/* ─── Shiki code viewer ───────────────────────────────────────── */
+/* 鈹€鈹€鈹€ Shiki code viewer 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 .code-viewer-area .line {
   display: block;
   padding: 0 12px;
@@ -297,7 +297,7 @@
   }
 }
 
-/* ─── Tailwind Theme Override (matches prototype design system) ─── */
+/* 鈹€鈹€鈹€ Tailwind Theme Override (matches prototype design system) 鈹€鈹€鈹€ */
 @theme {
   --color-primary: #8F482F;
   --color-primary-container: #AD5F45;
@@ -352,7 +352,7 @@
   --font-mono: var(--font-codex-mono);
 }
 
-/* ─── Semantic Aliases (used by layout & infrastructure components) ── */
+/* 鈹€鈹€鈹€ Semantic Aliases (used by layout & infrastructure components) 鈹€鈹€ */
 :root,
 [data-theme="light"] {
   color-scheme: light;
@@ -896,7 +896,7 @@
   --color-outline-a92: rgba(141, 127, 122, 0.92);
 }
 
-/* ─── Material Symbols ─────────────────────────────────────────── */
+/* 鈹€鈹€鈹€ Material Symbols 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
@@ -915,7 +915,7 @@
   vertical-align: middle;
 }
 
-/* ─── Base styles ──────────────────────────────────────────────── */
+/* 鈹€鈹€鈹€ Base styles 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 * {
   box-sizing: border-box;
 }
@@ -1922,7 +1922,7 @@ button, input, textarea, select, a, [role="button"] {
   background: rgba(255, 255, 255, 0.36);
 }
 
-/* ─── 3D floating surface pass ────────────────────────────────── */
+/* 鈹€鈹€鈹€ 3D floating surface pass 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 .app-shell:not(.app-shell--mobile) {
   --surface-3d-top: rgba(255, 255, 255, 0.86);
   --surface-3d-mid: rgba(246, 248, 244, 0.72);
@@ -2127,7 +2127,7 @@ button, input, textarea, select, a, [role="button"] {
 .app-shell:not(.app-shell--mobile) [data-testid="chat-input-panel"].codex-composer-panel .codex-composer-toolbar {
   border-bottom-left-radius: 22px;
   border-bottom-right-radius: 22px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .app-shell:not(.app-shell--mobile) .codex-composer-plus-button,
