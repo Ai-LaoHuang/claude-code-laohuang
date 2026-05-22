@@ -2872,8 +2872,8 @@ function PluginSettings() {
 // ─── About Settings ──────────────────────────────────────
 
 const GITHUB_PROFILE = 'https://github.com/Ai-LaoHuang'
-const GITHUB_REPO = ''
-const GITHUB_REPO_LABEL = 'Ai-LaoHuang'
+const GITHUB_REPO = 'https://github.com/Ai-LaoHuang/claude-code-laohuang'
+const GITHUB_REPO_LABEL = 'Ai-LaoHuang/claude-code-laohuang'
 const GITHUB_ISSUES = GITHUB_REPO ? `${GITHUB_REPO}/issues` : ''
 const GITHUB_RELEASES = GITHUB_REPO ? `${GITHUB_REPO}/releases` : ''
 const AUTHOR_GITHUB = GITHUB_PROFILE
@@ -2975,7 +2975,7 @@ function AboutSettings() {
       {/* GitHub Repo */}
       <div className="mt-6 w-full">
         <button
-          onClick={() => openUrl(GITHUB_PROFILE)}
+          onClick={() => openUrl(GITHUB_REPO)}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors cursor-pointer"
         >
           <img src="/icons/github.svg" alt="GitHub" className="w-5 h-5 opacity-70" />
