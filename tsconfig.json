@@ -84,7 +84,6 @@
   },
   "exclude": [
     "adapters",
-    "build-windows",
     "desktop",
     "dist",
     "runtime",

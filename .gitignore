@@ -25,6 +25,13 @@ desktop/src-tauri/binaries/
 desktop/src-tauri/target/
 desktop/src-tauri/gen/
 desktop/src-tauri/Cargo.lock.backup
+*.tsbuildinfo
+
+# Bun is the canonical package manager for this repo
+package-lock.json
+pnpm-lock.yaml
+**/package-lock.json
+**/pnpm-lock.yaml
 
 # Logs and temporary files
 *.log

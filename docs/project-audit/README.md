@@ -9,6 +9,9 @@ handoff, but too noisy for the repository root.
 - `Claude-code-laohuang 真实功能状态表.csv`
 - `Claude-code-laohuang 真实功能状态表-Excel兼容.csv`
 - `Claude-code-laohuang 真实功能状态表.html`
+- `setup-new-api.md`
+- `ui-restructure-plan.md`
+- `upstream-backfill-plan.md`
 
-These files capture an earlier manual feature-state audit. For current desktop
-docs, start from `docs/desktop/index.md`.
+These files capture earlier manual audits, migration notes, and planning
+snapshots. For current desktop docs, start from `docs/desktop/index.md`.

@@ -21,15 +21,7 @@ Windows 用户拿到的应该是一个桌面版安装器，而不是命令行源
 desktop/build-artifacts/windows-x64/Claude-Code-LaoHuang_0.1.0_windows_x64_setup.exe
 ```
 
-它不是旧的根目录 `dist/claude-code-laohuang-setup.exe`。
-
-旧安装器来自：
-
-```text
-scripts/build-windows.ts
-```
-
-旧安装器是 CLI/TUI 源码运行包，不是当前桌面 UI 版本。
+它不是旧的根目录 `dist/claude-code-laohuang-setup.exe`。旧的 CLI/TUI 源码运行包安装器链路已经移除，避免和当前桌面版发布路径混淆。
 
 ## 构建命令
 

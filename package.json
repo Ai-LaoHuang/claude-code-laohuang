@@ -20,9 +20,7 @@
     "test:desktop-server": "bun test src/desktop-server/__tests__",
     "smoke:laohuang-runtime": "bun ./scripts/smoke-laohuang-runtime.ts",
     "smoke:tools": "bun --feature BUDDY --feature PROACTIVE --feature KAIROS_BRIEF --feature KAIROS_DREAM --feature ULTRAPLAN --feature BRIDGE_MODE ./scripts/smoke-tools.ts",
-    "smoke:provider-proxy": "bun --feature BUDDY --feature PROACTIVE --feature KAIROS_BRIEF --feature KAIROS_DREAM --feature ULTRAPLAN --feature BRIDGE_MODE ./scripts/smoke-provider-proxy.ts",
-    "build:win": "bun run ./scripts/build-windows.ts",
-    "build:win:installer": "bun run ./scripts/build-windows.ts"
+    "smoke:provider-proxy": "bun --feature BUDDY --feature PROACTIVE --feature KAIROS_BRIEF --feature KAIROS_DREAM --feature ULTRAPLAN --feature BRIDGE_MODE ./scripts/smoke-provider-proxy.ts"
   },
   "pkg": {
     "scripts": "src/**/*.ts",

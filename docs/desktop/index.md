@@ -29,7 +29,7 @@ LaoHuang identity, visual shell, provider defaults, and local quality gate.
 | CLI entry | `bin/claude-code-laohuang` |
 | Provider runtime | `src/desktop-server/services/providerService.ts` and managed settings |
 | Workspace/worktree runtime | `src/desktop-server/services/workspaceService.ts` and `src/desktop-server/services/repositoryLaunchService.ts` |
-| Backfill plan | `UPSTREAM_BACKFILL_PLAN.md` |
+| Backfill plan | `docs/project-audit/upstream-backfill-plan.md` |
 
 ## What Changed From Upstream
 
