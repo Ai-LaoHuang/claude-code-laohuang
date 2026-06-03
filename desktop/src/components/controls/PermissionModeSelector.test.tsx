@@ -30,6 +30,11 @@ vi.mock('../../i18n', () => ({
     'permMode.label.plan': 'Plan mode',
     'permMode.label.bypassPermissions': 'Bypass permissions',
     'permMode.label.dontAsk': 'Bypass permissions',
+    'permMode.codexLabel.default': 'Default permissions',
+    'permMode.codexLabel.acceptEdits': 'Auto review',
+    'permMode.codexLabel.plan': 'Plan mode',
+    'permMode.codexLabel.bypassPermissions': 'Full access',
+    'permMode.codexLabel.dontAsk': "Don't ask",
     'permMode.enableBypassTitle': 'Enable bypass mode',
     'permMode.enableBypassSubtitle': 'This is risky',
     'permMode.enableBypassBody': 'Bypass permissions for this workspace.',
@@ -72,5 +77,20 @@ describe('PermissionModeSelector mobile access', () => {
     expect(screen.getByRole('dialog', { name: 'Execution Permissions' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
     expect(screen.getByRole('menuitem', { name: /Auto accept edits/ })).toBeInTheDocument()
+  })
+
+  it('renders the Codex composer menu as a viewport popover with visible options', () => {
+    render(<PermissionModeSelector variant="codexComposer" />)
+
+    const trigger = screen.getByRole('button', { name: 'Default permissions' })
+    fireEvent.click(trigger)
+
+    const menu = screen.getByRole('menu')
+    expect(menu).toHaveAttribute('id', 'permission-mode-menu')
+    expect(menu).toHaveClass('fixed', 'z-[10000]', 'codex-composer-permission-menu')
+    expect(menu).not.toHaveClass('absolute', 'bottom-full')
+    expect(document.querySelectorAll('#permission-mode-menu')).toHaveLength(1)
+    expect(screen.getByRole('menuitem', { name: /Auto review/ })).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: /Full access/ })).toBeInTheDocument()
   })
 })

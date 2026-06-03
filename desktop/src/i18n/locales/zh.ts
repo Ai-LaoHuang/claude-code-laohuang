@@ -1308,6 +1308,11 @@ export const zh: Record<TranslationKey, string> = {
   'permMode.label.plan': '计划模式',
   'permMode.label.bypassPermissions': '跳过',
   'permMode.label.dontAsk': '不询问',
+  'permMode.codexLabel.default': '默认权限',
+  'permMode.codexLabel.acceptEdits': '自动审查',
+  'permMode.codexLabel.plan': '计划模式',
+  'permMode.codexLabel.bypassPermissions': '完全访问权限',
+  'permMode.codexLabel.dontAsk': '不询问',
 
   // ─── Model Selector ──────────────────────────────────────
   'model.selectModel': '选择模型',

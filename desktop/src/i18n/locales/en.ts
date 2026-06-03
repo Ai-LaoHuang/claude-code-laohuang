@@ -1305,6 +1305,11 @@ export const en = {
   'permMode.label.plan': 'Plan mode',
   'permMode.label.bypassPermissions': 'Bypass',
   'permMode.label.dontAsk': "Don't ask",
+  'permMode.codexLabel.default': 'Default permissions',
+  'permMode.codexLabel.acceptEdits': 'Auto review',
+  'permMode.codexLabel.plan': 'Plan mode',
+  'permMode.codexLabel.bypassPermissions': 'Full access',
+  'permMode.codexLabel.dontAsk': "Don't ask",
 
   // ─── Model Selector ──────────────────────────────────────
   'model.selectModel': 'Select model',

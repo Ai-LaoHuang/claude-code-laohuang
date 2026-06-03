@@ -91,11 +91,11 @@ export function PermissionModeSelector({ workDir: workDirProp, compact = false, 
   }
   const isCodexComposer = variant === 'codexComposer'
   const CODEX_MODE_LABELS: Record<PermissionMode, string> = {
-    default: '榛樿鏉冮檺',
-    acceptEdits: '鑷姩瀹℃煡',
-    plan: t('permMode.label.plan'),
-    bypassPermissions: '瀹屽叏璁块棶鏉冮檺',
-    dontAsk: t('permMode.label.dontAsk'),
+    default: t('permMode.codexLabel.default'),
+    acceptEdits: t('permMode.codexLabel.acceptEdits'),
+    plan: t('permMode.codexLabel.plan'),
+    bypassPermissions: t('permMode.codexLabel.bypassPermissions'),
+    dontAsk: t('permMode.codexLabel.dontAsk'),
   }
   const displayLabels = isCodexComposer ? CODEX_MODE_LABELS : MODE_LABELS
 
@@ -156,55 +156,52 @@ export function PermissionModeSelector({ workDir: workDirProp, compact = false, 
     }
   }, [open, isMobile])
 
-  const permissionOptions = (
-    <div id={menuId} ref={menuRef} role="menu">
-      {(isCodexComposer
-        ? PERMISSION_ITEMS.map((item) => ({ ...item, label: displayLabels[item.value] }))
-        : PERMISSION_ITEMS
-      ).map((item) => (
-        <button
-          key={item.value}
-          role="menuitem"
-          onClick={() => {
-            if (item.value === 'bypassPermissions') {
-              setOpen(false)
-              setConfirmDialog(true)
-              return
-            }
-            if (isControlled) {
-              onChange?.(item.value)
-            } else {
-              void setPermissionMode(item.value)
-              if (activeTabId) setSessionPermissionMode(activeTabId, item.value)
-            }
-            setOpen(false)
-          }}
-          className={isCodexComposer
-            ? 'flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-[var(--color-surface-hover)]'
-            : `
-              flex w-full items-start gap-3 px-4 py-3 text-left transition-colors
-              hover:bg-[var(--color-surface-hover)]
-              ${item.value === currentMode ? 'bg-[var(--color-surface-selected)]' : ''}
-            `}
-        >
-          <span className={`material-symbols-outlined ${isCodexComposer ? 'text-[18px]' : 'mt-0.5 text-[20px]'} ${item.color || 'text-[var(--color-text-secondary)]'}`}>
-            {item.icon}
-          </span>
-          <div className="min-w-0 flex-1">
-            <div className="text-sm font-semibold text-[var(--color-text-primary)]">{item.label}</div>
-            {!isCodexComposer && (
-              <div className="mt-0.5 text-xs text-[var(--color-text-tertiary)]">{item.description}</div>
-            )}
-          </div>
-          {item.value === currentMode && (
-            <span className={`material-symbols-outlined ${isCodexComposer ? 'text-[18px] text-[var(--color-text-secondary)]' : 'mt-0.5 text-[16px] text-[var(--color-brand)]'}`} style={isCodexComposer ? undefined : { fontVariationSettings: "'FILL' 1" }}>
-              {isCodexComposer ? 'check' : 'check_circle'}
-            </span>
-          )}
-        </button>
-      ))}
-    </div>
-  )
+  const permissionItems = isCodexComposer
+    ? PERMISSION_ITEMS.map((item) => ({ ...item, label: displayLabels[item.value] }))
+    : PERMISSION_ITEMS
+
+  const permissionOptions = permissionItems.map((item) => (
+    <button
+      key={item.value}
+      role="menuitem"
+      onClick={() => {
+        if (item.value === 'bypassPermissions') {
+          setOpen(false)
+          setConfirmDialog(true)
+          return
+        }
+        if (isControlled) {
+          onChange?.(item.value)
+        } else {
+          void setPermissionMode(item.value)
+          if (activeTabId) setSessionPermissionMode(activeTabId, item.value)
+        }
+        setOpen(false)
+      }}
+      className={isCodexComposer
+        ? 'flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-[var(--color-surface-hover)]'
+        : `
+          flex w-full items-start gap-3 px-4 py-3 text-left transition-colors
+          hover:bg-[var(--color-surface-hover)]
+          ${item.value === currentMode ? 'bg-[var(--color-surface-selected)]' : ''}
+        `}
+    >
+      <span className={`material-symbols-outlined ${isCodexComposer ? 'text-[18px]' : 'mt-0.5 text-[20px]'} ${item.color || 'text-[var(--color-text-secondary)]'}`}>
+        {item.icon}
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="text-sm font-semibold text-[var(--color-text-primary)]">{item.label}</div>
+        {!isCodexComposer && (
+          <div className="mt-0.5 text-xs text-[var(--color-text-tertiary)]">{item.description}</div>
+        )}
+      </div>
+      {item.value === currentMode && (
+        <span className={`material-symbols-outlined ${isCodexComposer ? 'text-[18px] text-[var(--color-text-secondary)]' : 'mt-0.5 text-[16px] text-[var(--color-brand)]'}`} style={isCodexComposer ? undefined : { fontVariationSettings: "'FILL' 1" }}>
+          {isCodexComposer ? 'check' : 'check_circle'}
+        </span>
+      )}
+    </button>
+  ))
 
   const menuContent = (
     <>
@@ -253,7 +250,9 @@ export function PermissionModeSelector({ workDir: workDirProp, compact = false, 
             ariaLabel={t('permMode.executionPermissions')}
             contentClassName="py-2"
           >
-            {permissionOptions}
+            <div id={menuId} ref={menuRef} role="menu">
+              {permissionOptions}
+            </div>
           </MobileBottomSheet>
         ) : createPortal(
           <div
