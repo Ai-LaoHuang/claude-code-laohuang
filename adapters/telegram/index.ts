@@ -34,6 +34,7 @@ import { checkAttachmentLimit } from '../common/attachment/attachment-limits.js'
 import type { AttachmentRef } from '../common/ws-bridge.js'
 import { ImageBlockWatcher } from '../common/attachment/image-block-watcher.js'
 import type { PendingUpload } from '../common/attachment/attachment-types.js'
+import { LatestOnlyQueue } from '../common/latest-only-queue.js'
 import * as fs from 'node:fs/promises'
 
 const TELEGRAM_TEXT_LIMIT = 4000 // leave margin below 4096
@@ -70,6 +71,10 @@ const runtimeStates = new Map<string, ChatRuntimeState>()
 const pendingPermissions = new Map<string, Set<string>>()
 /** Per-chat outbound image watcher for Agent-produced markdown images. */
 const tgImageWatchers = new Map<string, ImageBlockWatcher>()
+
+// Telegram editMessageText can be slow or rate-limited. Keep only the newest
+// edit per message so streaming tokens never wait behind stale partial edits.
+const editQueues = new Map<string, LatestOnlyQueue<string>>()
 
 function getTgWatcher(chatId: string): ImageBlockWatcher {
   let w = tgImageWatchers.get(chatId)
@@ -216,17 +221,13 @@ async function flushToTelegram(chatId: string, newText: string, isComplete: bool
   if (placeholder) {
     if (isComplete) {
       const chunks = splitMessage(fullText, TELEGRAM_TEXT_LIMIT)
-      try {
-        await bot.api.editMessageText(numericChatId, placeholder.messageId, chunks[0]!)
-      } catch { /* ignore */ }
+      await queueTelegramEdit(chatId, placeholder.messageId, chunks[0]!)
       for (let i = 1; i < chunks.length; i++) {
         await bot.api.sendMessage(numericChatId, chunks[i]!)
       }
     } else {
       const displayText = fullText.slice(0, TELEGRAM_TEXT_LIMIT - 2) + ' ▍'
-      try {
-        await bot.api.editMessageText(numericChatId, placeholder.messageId, displayText)
-      } catch { /* ignore */ }
+      void queueTelegramEdit(chatId, placeholder.messageId, displayText)
     }
   } else if (isComplete && fullText.trim()) {
     const chunks = splitMessage(fullText, TELEGRAM_TEXT_LIMIT)
@@ -240,6 +241,23 @@ async function flushToTelegram(chatId: string, newText: string, isComplete: bool
     accumulatedText.delete(chatId)
     buffers.get(chatId)?.reset()
   }
+}
+
+function queueTelegramEdit(chatId: string, messageId: number, text: string): Promise<void> {
+  const key = `${chatId}:${messageId}`
+  let queue = editQueues.get(key)
+  if (!queue) {
+    queue = new LatestOnlyQueue<string>(async (latestText) => {
+      try {
+        await bot.api.editMessageText(Number(chatId), messageId, latestText)
+      } catch {
+        // Ignore Telegram edit races: message may be unchanged, deleted, or
+        // replaced by a final send. Resolve waiters so streaming keeps moving.
+      }
+    })
+    editQueues.set(key, queue)
+  }
+  return queue.enqueue(text)
 }
 
 // ---------- session management ----------
@@ -392,7 +410,7 @@ async function handleServerMessage(chatId: string, msg: ServerMessage): Promise<
           const text = accumulatedText.get(chatId)
           if (text?.trim()) {
             try {
-              await bot.api.editMessageText(numericChatId, placeholders.get(chatId)!.messageId, text)
+              await queueTelegramEdit(chatId, placeholders.get(chatId)!.messageId, text)
             } catch { /* ignore */ }
           }
           placeholders.delete(chatId)
@@ -414,13 +432,11 @@ async function handleServerMessage(chatId: string, msg: ServerMessage): Promise<
 
     case 'thinking':
       if (placeholders.has(chatId)) {
-        try {
-          await bot.api.editMessageText(
-            numericChatId,
-            placeholders.get(chatId)!.messageId,
-            `💭 ${msg.text.slice(0, 200)}...`,
-          )
-        } catch { /* ignore */ }
+        void queueTelegramEdit(
+          chatId,
+          placeholders.get(chatId)!.messageId,
+          `💭 ${msg.text.slice(0, 200)}...`,
+        )
       }
       break
 
@@ -459,7 +475,7 @@ async function handleServerMessage(chatId: string, msg: ServerMessage): Promise<
         if (text?.trim()) {
           try {
             const chunks = splitMessage(text, TELEGRAM_TEXT_LIMIT)
-            await bot.api.editMessageText(numericChatId, placeholders.get(chatId)!.messageId, chunks[0]!)
+            await queueTelegramEdit(chatId, placeholders.get(chatId)!.messageId, chunks[0]!)
             for (let i = 1; i < chunks.length; i++) {
               await bot.api.sendMessage(numericChatId, chunks[i]!)
             }
