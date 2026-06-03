@@ -1,0 +1,61 @@
+name: Build macOS Desktop DMG
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release tag to upload the DMG to, for example v0.1.0. Leave empty to only upload workflow artifacts.'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-macos-desktop:
+    name: macOS Apple Silicon DMG
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+
+      - name: Build macOS desktop DMG
+        run: bash ./desktop/scripts/build-macos-arm64.sh
+
+      - name: Prepare release asset names
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARTIFACT_DIR="desktop/build-artifacts/macos-arm64"
+          DMG="$(find "${ARTIFACT_DIR}" -maxdepth 1 -type f -name '*.dmg' | sort | tail -n 1)"
+          test -n "${DMG}"
+          cp -f "${DMG}" "${ARTIFACT_DIR}/Claude-Code-LaoHuang_0.1.0_macos_arm64.dmg"
+          cp -f "${ARTIFACT_DIR}/BUILD_INFO.txt" "${ARTIFACT_DIR}/BUILD_INFO_macos_arm64.txt"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Claude-Code-LaoHuang-macos-arm64-dmg
+          path: desktop/build-artifacts/macos-arm64/*
+          if-no-files-found: error
+
+      - name: Upload DMG to release
+        if: ${{ inputs.release_tag != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "${{ inputs.release_tag }}" \
+            desktop/build-artifacts/macos-arm64/Claude-Code-LaoHuang_0.1.0_macos_arm64.dmg \
+            desktop/build-artifacts/macos-arm64/BUILD_INFO_macos_arm64.txt \
+            --clobber
