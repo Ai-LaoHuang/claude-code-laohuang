@@ -63,6 +63,9 @@ if [[ "${SKIP_INSTALL:-0}" != "1" ]]; then
 
   echo "[build-macos-arm64] Installing desktop dependencies..."
   (cd "${DESKTOP_DIR}" && bun install)
+
+  echo "[build-macos-arm64] Installing adapter dependencies..."
+  (cd "${REPO_ROOT}/adapters" && bun install)
 fi
 
 # ── 清理 + 显式预热前端 / sidecar ────────────────────────────
